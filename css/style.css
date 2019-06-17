@@ -1,0 +1,12 @@
+* {
+	font-family: Microsoft-YaHei;
+}
+.foo {
+	box-sizing: border-box;
+	width: 50%;
+	margin: auto;
+}
+.foo canvas {
+	border: 1px solid black;
+	cursor: pointer;
+}
