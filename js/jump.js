@@ -49,7 +49,7 @@ function jump() {
 			enemyX = 640;
 			enemyMove = -4;
 		}
-	}
+	}	
 
 	// game over effect 
 	let gameover = 0;
@@ -66,6 +66,36 @@ function jump() {
 		}
 	}
 
+	// score 
+	function sleep(t) {
+		return new Promise(resolve => {
+			setTimeout(resolve, t);
+		});
+	}
+	let score = 0;
+	if (!localStorage.highScore) {
+		localStorage.highScore = 0;
+	}
+	let foo = async function() {
+		for (let i = 0; i < 999; i++) {
+			if (gameover == 0) {
+				ctx.font = '20px Microsoft-YaHei'
+				ctx.strokeStyle = '#111';
+				ctx.clearRect(0, 10, 640, 30);
+				ctx.fillText('得分: ' + i, 500, 30);
+				await sleep(1000);
+			} else {
+				score = i - 1;
+				if (score > localStorage.highScore) {
+					localStorage.highScore = score;
+				}
+				break;
+			}
+		}	
+	};
+	foo();	
+	document.querySelector('#score').innerText = '最高分: ' + localStorage.highScore;
+
 	// jump and enemy effect
 	let loop = function () {
 		// jump range function
@@ -81,7 +111,7 @@ function jump() {
 		}
 
 		// client redraw
-		ctx.clearRect(0, 0, 640, 360);
+		ctx.clearRect(0, 35, 640, 360);
 		ctx.drawImage(img, roleX, roleY);
 		ctx.drawImage(enemyImg, enemyX, enemyY);
 
